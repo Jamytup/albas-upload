@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f766e"><meta name="robots" content="noindex">
+<title>Albas – Send product</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:#f1f5f9;color:#111827}
+header{background:#0f766e;color:#fff;padding:14px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:5}
+header b{font-size:18px;flex:1}header button{background:rgba(255,255,255,.18);color:#fff;border:0;border-radius:8px;padding:7px 12px;font-size:14px}
+main{max-width:520px;margin:0 auto;padding:14px}
+.card{background:#fff;border-radius:14px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.08);margin-bottom:14px}
+label{display:block;font-weight:700;font-size:14px;margin:12px 0 5px}label small{font-weight:400;color:#6b7280}
+input,textarea{width:100%;font-size:17px;padding:11px 12px;border:1.5px solid #cbd5e1;border-radius:10px;background:#fff;color:#111827}
+input:focus,textarea:focus{outline:0;border-color:#0f766e}
+.row{display:flex;gap:10px}.row>div{flex:1;min-width:0}
+.btn{display:block;width:100%;border:0;border-radius:12px;padding:15px;font-size:18px;font-weight:800;background:#0f766e;color:#fff;margin-top:16px}
+.btn:disabled{opacity:.55}.btn.ghost{background:#e2e8f0;color:#111827;font-weight:700;font-size:16px;padding:12px}
+.photo{border:2px dashed #94a3b8;border-radius:14px;min-height:190px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:#475569;text-align:center;overflow:hidden;position:relative;background:#f8fafc}
+.photo img{max-width:100%;max-height:320px;display:block}.photo .big{font-size:46px;line-height:1}
+.pbtns{display:flex;gap:10px;margin-top:10px}.pbtns .btn{margin:0;font-size:15px;padding:12px}
+.msg{padding:10px 12px;border-radius:10px;margin-top:12px;font-weight:600;display:none}.msg.err{background:#fee2e2;color:#991b1b;display:block}.msg.ok{background:#dcfce7;color:#166534;display:block}
+.hint{color:#64748b;font-size:13px;margin:6px 0 0}
+.list .it{display:flex;gap:10px;align-items:center;padding:9px 0;border-top:1px solid #e5e7eb;font-size:14px}.list .it:first-child{border-top:0}
+.tag{font-size:12px;border-radius:20px;padding:2px 9px;font-weight:700;white-space:nowrap}.tag.new{background:#fef9c3;color:#854d0e}.tag.used{background:#dcfce7;color:#166534}
+.it .x{background:none;border:0;color:#dc2626;font-size:13px;padding:4px}
+.hidden{display:none!important}
+[dir=rtl]{text-align:right}
+</style></head>
+<body>
+<header><b id="hTitle">Albas – Send product</b><button id="bOut" class="hidden" type="button">Log out</button></header>
+<main>
+  <!-- login -->
+  <section id="vLogin" class="card">
+    <h2 style="margin:0 0 4px">Staff login</h2>
+    <p class="hint" style="margin:0">Your manager gives you the shop code, username and password.</p>
+    <label for="lShop">Shop code</label><input id="lShop" autocomplete="off" autocapitalize="characters" maxlength="8" placeholder="e.g. K7M2QX">
+    <label for="lUser">Username</label><input id="lUser" autocomplete="username" autocapitalize="none" placeholder="e.g. ahmed">
+    <label for="lPass">Password</label><input id="lPass" type="password" autocomplete="current-password">
+    <button class="btn" id="bLogin" type="button">Log in</button>
+    <div class="msg" id="lMsg"></div>
+  </section>
+
+  <!-- send -->
+  <section id="vSend" class="hidden">
+    <div class="card">
+      <div class="photo" id="pBox"><span class="big">📷</span><span><b>Take a photo of the product</b><br>or choose one from the gallery</span></div>
+      <div class="pbtns"><button class="btn" type="button" id="bCam">📷 Camera</button><button class="btn ghost" type="button" id="bGal">🖼️ Gallery</button></div>
+      <input type="file" id="fCam" accept="image/*" capture="environment" class="hidden"><input type="file" id="fGal" accept="image/*" class="hidden">
+      <label for="iName">Product name <small>(English)</small></label><input id="iName" maxlength="120" placeholder="e.g. MANGO ALPHONSO" autocapitalize="characters">
+      <label for="iAr">Arabic name <small>(optional)</small></label><input id="iAr" dir="rtl" maxlength="120" placeholder="مثال: مانجو">
+      <div class="row"><div><label for="iSize">Size / weight</label><input id="iSize" maxlength="40" placeholder="1 KG"></div>
+        <div><label for="iBar">Barcode <small>(optional)</small></label><input id="iBar" inputmode="numeric" maxlength="40"></div></div>
+      <div class="row"><div><label for="iPrice">Offer price</label><input id="iPrice" inputmode="decimal" maxlength="20" placeholder="12.95"></div>
+        <div><label for="iOld">Old price <small>(optional)</small></label><input id="iOld" inputmode="decimal" maxlength="20" placeholder="16.50"></div></div>
+      <label for="iLimit">Limit <small>(optional)</small></label><input id="iLimit" maxlength="60" placeholder="e.g. Max 2 per customer">
+      <label for="iNote">Note for the designer <small>(optional)</small></label><textarea id="iNote" rows="2" maxlength="300" placeholder="e.g. offer valid until Friday"></textarea>
+      <button class="btn" type="button" id="bSend">✅ Send to shop</button>
+      <div class="msg" id="sMsg"></div>
+    </div>
+    <div class="card"><b>Sent by you</b><div class="list" id="mine"><p class="hint">Nothing sent yet.</p></div></div>
+  </section>
+  <p class="hint" style="text-align:center">Albas Promo Print Studio · staff upload</p>
+</main>
+<script>
+const API="https://iwstdnwuhxelhlejcwrf.supabase.co/functions/v1/api";
+const $=id=>document.getElementById(id);
+const store={get:k=>{try{return localStorage.getItem("albasUp."+k)}catch(e){return null}},set:(k,v)=>{try{v==null?localStorage.removeItem("albasUp."+k):localStorage.setItem("albasUp."+k,v)}catch(e){}}};
+let SES=store.get("ses"),PHOTO=null;
+async function call(route,body){
+  try{const r=await fetch(API+"/"+route,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body||{})});return await r.json()}
+  catch(e){return{ok:false,code:"offline",error:"No internet connection. Check your mobile data / Wi-Fi and try again."}}}
+function msg(el,t,ok){el.textContent=t||"";el.className="msg"+(t?(ok?" ok":" err"):"")}
+function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function view(v){$("vLogin").classList.toggle("hidden",v!=="login");$("vSend").classList.toggle("hidden",v!=="send");$("bOut").classList.toggle("hidden",v!=="send")}
+function title(shop,name){$("hTitle").textContent=shop?shop+(name?" · "+name:""):"Albas – Send product"}
+
+/* login */
+(function(){const q=new URLSearchParams(location.search),c=q.get("shop")||store.get("shop")||"";$("lShop").value=c.toUpperCase();$("lUser").value=store.get("user")||"";})();
+$("bLogin").onclick=async()=>{const shop=$("lShop").value.trim(),username=$("lUser").value.trim(),password=$("lPass").value;
+  if(!shop||!username||!password){msg($("lMsg"),"Enter shop code, username and password.");return}
+  $("bLogin").disabled=true;msg($("lMsg"),"");const r=await call("staff_login",{shop,username,password});$("bLogin").disabled=false;
+  if(!r.ok){msg($("lMsg"),r.error||"Could not log in.");return}
+  SES=r.staff_session;store.set("ses",SES);store.set("shop",shop.toUpperCase());store.set("user",username);$("lPass").value="";title(r.shop,r.name);view("send");loadMine()};
+$("lPass").addEventListener("keydown",e=>{if(e.key==="Enter")$("bLogin").click()});
+$("bOut").onclick=()=>{SES=null;store.set("ses",null);title();view("login")};
+
+/* photo: shrink on the phone so it uploads fast on mobile data */
+$("bCam").onclick=()=>$("fCam").click();$("bGal").onclick=()=>$("fGal").click();
+["fCam","fGal"].forEach(id=>$(id).onchange=async e=>{const f=e.target.files&&e.target.files[0];e.target.value="";if(!f)return;
+  try{PHOTO=await shrink(f,1280,0.82);$("pBox").innerHTML=`<img src="${PHOTO}" alt="Product photo">`}catch(err){msg($("sMsg"),"Could not read this picture. Try another one.")}});
+async function shrink(file,max,q){
+  const url=URL.createObjectURL(file);
+  try{const img=await new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=url});
+    let w=img.naturalWidth,h=img.naturalHeight;const s=Math.min(1,max/Math.max(w,h));w=Math.round(w*s);h=Math.round(h*s);
+    const c=document.createElement("canvas");c.width=w;c.height=h;const x=c.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,w,h);x.drawImage(img,0,0,w,h);
+    let d=c.toDataURL("image/jpeg",q);for(let qq=q-0.12;d.length>850000&&qq>0.3;qq-=0.12)d=c.toDataURL("image/jpeg",qq);return d}
+  finally{URL.revokeObjectURL(url)}}
+
+/* send */
+const FIELDS={name:"iName",name_ar:"iAr",size:"iSize",barcode:"iBar",price:"iPrice",old_price:"iOld",limit:"iLimit",note:"iNote"};
+$("bSend").onclick=async()=>{const b={staff_session:SES,photo:PHOTO};Object.entries(FIELDS).forEach(([k,id])=>b[k]=$(id).value.trim());
+  if(!PHOTO&&!b.name){msg($("sMsg"),"Add a photo or the product name.");return}
+  if(!b.price&&!confirm("No price entered. Send anyway?"))return;
+  $("bSend").disabled=true;$("bSend").textContent="Sending…";msg($("sMsg"),"");
+  const r=await call("staff_submit",b);$("bSend").disabled=false;$("bSend").textContent="✅ Send to shop";
+  if(!r.ok){if(r.code==="session_ended"||r.code==="no_session"){SES=null;store.set("ses",null);view("login");msg($("lMsg"),r.error)}else msg($("sMsg"),r.error||"Could not send.");return}
+  msg($("sMsg"),"Sent ✔ – the designer will see it in Albas.",true);PHOTO=null;Object.values(FIELDS).forEach(id=>$(id).value="");
+  $("pBox").innerHTML='<span class="big">📷</span><span><b>Next product</b><br>take another photo</span>';loadMine();window.scrollTo({top:0,behavior:"smooth"})};
+
+async function loadMine(){const r=await call("staff_mine",{staff_session:SES});
+  if(!r.ok){if(r.code==="session_ended"||r.code==="no_session"){SES=null;store.set("ses",null);view("login")}return}
+  title(r.shop,r.name);
+  $("mine").innerHTML=r.uploads.length?r.uploads.map(u=>`<div class="it"><div style="flex:1;min-width:0"><b>${esc(u.name||"(photo only)")}</b> ${u.price?"– "+esc(u.price):""}<br><span class="hint">${new Date(u.created_at).toLocaleString()}${u.has_photo?" · 📷":""}</span></div>
+     <span class="tag ${u.status}">${u.status==="new"?"Waiting":"Used ✔"}</span>${u.status==="new"?`<button class="x" type="button" data-del="${u.id}">Delete</button>`:""}</div>`).join(""):'<p class="hint">Nothing sent yet.</p>'}
+$("mine").onclick=async e=>{const id=e.target.dataset&&e.target.dataset.del;if(!id||!confirm("Delete this upload?"))return;await call("staff_delete",{staff_session:SES,id:+id});loadMine()};
+
+if(SES){view("send");loadMine()}else view("login");
+</script>
+</body></html>
