@@ -63,6 +63,7 @@ input:focus,textarea:focus{outline:0;border-color:#0f766e}
 </main>
 <script>
 const API="https://iwstdnwuhxelhlejcwrf.supabase.co/functions/v1/api";
+const SHOP_LOCK="__SHOP_LOCK__".replace(/^__.*__$/,""),SHOP_NAME="__SHOP_NAME__".replace(/^__.*__$/,""); /* set when the owner saves this page from the program */
 const $=id=>document.getElementById(id);
 const store={get:k=>{try{return localStorage.getItem("albasUp."+k)}catch(e){return null}},set:(k,v)=>{try{v==null?localStorage.removeItem("albasUp."+k):localStorage.setItem("albasUp."+k,v)}catch(e){}}};
 let SES=store.get("ses"),PHOTO=null;
@@ -75,7 +76,9 @@ function view(v){$("vLogin").classList.toggle("hidden",v!=="login");$("vSend").c
 function title(shop,name){$("hTitle").textContent=shop?shop+(name?" · "+name:""):"Albas – Send product"}
 
 /* login */
-(function(){const q=new URLSearchParams(location.search),c=q.get("shop")||store.get("shop")||"";$("lShop").value=c.toUpperCase();$("lUser").value=store.get("user")||"";})();
+(function(){const q=new URLSearchParams(location.search),c=SHOP_LOCK||q.get("shop")||store.get("shop")||"";$("lShop").value=c.toUpperCase();$("lUser").value=store.get("user")||"";
+  if(SHOP_LOCK){$("lShop").closest("section").querySelector("label[for=lShop]").classList.add("hidden");$("lShop").classList.add("hidden");title(SHOP_NAME)}
+  if(SHOP_LOCK&&store.get("shop")&&store.get("shop")!==SHOP_LOCK){SES=null;store.set("ses",null)}})();
 $("bLogin").onclick=async()=>{const shop=$("lShop").value.trim(),username=$("lUser").value.trim(),password=$("lPass").value;
   if(!shop||!username||!password){msg($("lMsg"),"Enter shop code, username and password.");return}
   $("bLogin").disabled=true;msg($("lMsg"),"");const r=await call("staff_login",{shop,username,password});$("bLogin").disabled=false;
